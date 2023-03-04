@@ -18,10 +18,7 @@ st.set_page_config(
 
 
 def plot_altair(df):
-    for c in df.columns:
-        print(c)
 
-    print(df['State'].unique())
     # Clean Dataset
     df = df.dropna()
     #df = df.drop(df.index[df['Model Year'] != 2022])
@@ -29,7 +26,6 @@ def plot_altair(df):
     df = df.drop(df.index[df['Electric Range'] <= 100])
     df = df.drop(df.index[df['Model Year'] < 2020])
     df = df.reset_index()
-    print(df.iloc[-1])
 
     reduced_string = "BONNEVILLE POWER"
     for eu in df['Electric Utility'].unique():
@@ -41,7 +37,6 @@ def plot_altair(df):
             df.loc[df['Electric Utility'] == eu, 'Electric Utility'] = "Other"
 
     df.reset_index(drop=True, inplace=True)
-    print(df['Electric Utility'].unique())
 
     df.loc[df['Electric Utility'] == 'PUGET SOUND ENERGY INC||CITY OF TACOMA - (WA)', 'Electric Utility'] = "CITY OF TACOMA"
     df.loc[df['Electric Utility'] == 'CITY OF SEATTLE - (WA)|CITY OF TACOMA - (WA)', 'Electric Utility'] = "CITY OF SEATTLE"
