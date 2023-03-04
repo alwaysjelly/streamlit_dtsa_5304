@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd 
 import altair as alt 
 from altair import pipe, limit_rows, to_values
-import geopandas as gpd
 from vega_datasets import data
 t = lambda data: pipe(data, limit_rows(max_rows=10000), to_values)
 alt.data_transformers.register('custom', t)
@@ -54,13 +53,10 @@ def plot_altair(df):
 
     interval = alt.selection_multi(encodings=['color'])
 
-    #gdf = gpd.read_file('https://raw.githubusercontent.com/python-visualization/folium/master/tests/us-states.json', driver='GeoJSON')
     gdf = alt.topo_feature('https://raw.githubusercontent.com/python-visualization/folium/master/tests/us-states.json', feature='states')
-    print(gdf)
 
     regions = alt.topo_feature(data.us_10m.url, 'counties')
 
-    #gdf = gdf[gdf.id=='WA']
     inline_data = regions
     base = alt.Chart(inline_data, title='Location of Registered EVs').mark_geoshape(
         stroke='gray', 
